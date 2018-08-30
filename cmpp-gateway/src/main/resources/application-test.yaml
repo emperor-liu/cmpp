@@ -1,0 +1,17 @@
+#spring jsckson
+spring: 
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+logging:
+  config: classpath:logback.xml
+  
+#socket config
+socket:
+  port: 8080
+  heartBeat: 600
+  
+#redis config
+redis:
+  ip: 192.168.127.2
+  port: 6379

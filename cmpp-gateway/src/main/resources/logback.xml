@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<conversionRule conversionWord="clr"
+		converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+	<conversionRule conversionWord="wex"
+		converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+	<conversionRule conversionWord="wEx"
+		converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+	<!-- 文件输出格式 -->
+	<property name="PATTERN"
+		value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n" />
+	<!-- test文件路径 -->
+	<property name="TEST_FILE_PATH" value="/mnt/logs/pushServer" />
+	<!-- 开发文件路径 -->
+	<property name="DEV_FILE_PATH" value="/Users/liujie/server/logs/cmcc-gateway" />
+	<!-- pro文件路径 -->
+	<property name="PRO_FILE_PATH" value="/mnt/logs/pushServer" />
+	
+	<springProfile name="dev">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+        <logger name="com.lljqiu.tools.cmpp.gateway" level="debug" />
+        <root level="info">
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>
+	<!-- 开发环境 -->
+	<springProfile name="test">
+		<appender name="TEST-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--日志文件输出的文件名 -->
+                <FileNamePattern>${TEST_FILE_PATH}/runtime.%d{yyyy-MM-dd}.log
+                </FileNamePattern>
+                <!--日志文件保留天数 -->
+                <MaxHistory>100</MaxHistory>
+            </rollingPolicy>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+            <!--日志文件最大的大小 -->
+            <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <MaxFileSize>10MB</MaxFileSize>
+            </triggeringPolicy>
+		</appender>
+		<logger name="com.lljqiu.tools.pushServer" level="info" />
+		<root level="info">
+			<appender-ref ref="TEST-FILE" />
+		</root>
+	</springProfile>
+
+	<springProfile name="prod"> 
+		<appender name="PRO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+				<!--日志文件输出的文件名 -->
+				<FileNamePattern>${PRO_FILE_PATH}/runtime.%d{yyyy-MM-dd}.log
+				</FileNamePattern>
+				<!--日志文件保留天数 -->
+				<MaxHistory>100</MaxHistory>
+			</rollingPolicy>
+			<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+				<pattern>${PATTERN}</pattern>
+			</encoder>
+			<!--日志文件最大的大小 -->
+			<triggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+				<MaxFileSize>10MB</MaxFileSize>
+			</triggeringPolicy>
+		</appender>
+		<logger name="com.lljqiu.tools.pushServer" level="info" />
+		<root level="info">
+			<appender-ref ref="PRO-FILE" />
+		</root>
+	</springProfile>
+</configuration>

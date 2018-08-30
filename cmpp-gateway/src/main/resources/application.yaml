@@ -1,0 +1,11 @@
+spring: 
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+logging:
+  config: classpath:logback.xml
+application:
+  name: pushServer
+  version: 1.0.0
