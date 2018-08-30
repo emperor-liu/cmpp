@@ -12,6 +12,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 import com.lljqiu.tools.cmpp.gateway.acceptor.CmccAcceptor;
 import com.lljqiu.tools.cmpp.gateway.service.ReadMsgService;
+import com.lljqiu.tools.cmpp.gateway.stack.ClientInfo;
+import com.lljqiu.tools.cmpp.gateway.utils.EhCache;
 import com.lljqiu.tools.cmpp.gateway.utils.ReadYamlUtils;
 
 /** 
@@ -31,15 +34,19 @@ import com.lljqiu.tools.cmpp.gateway.utils.ReadYamlUtils;
  */
 @ComponentScan(basePackages ="com.lljqiu.tools.cmpp.gateway")
 @SpringBootApplication
-public class MCPPServer {
-    private static final Logger logger = LoggerFactory.getLogger(MCPPServer.class);
+public class CmppGateWayServer {
+    private static final Logger logger = LoggerFactory.getLogger(CmppGateWayServer.class);
     
     public static void main(String[] args) {
-        SpringApplication.run(MCPPServer.class, args);
+        SpringApplication.run(CmppGateWayServer.class, args);
         logger.info("start server ...");
+        List<ClientInfo> clientConfig = ReadYamlUtils.getClientConfig();
+        for (ClientInfo clientInfo : clientConfig) {
+        	EhCache.put(EhCache.CACHE_NAME, clientInfo.getSpIp(), clientInfo);
+		}
         CmccAcceptor acceptor = new CmccAcceptor();
         acceptor.start();
-//        start();
+        
     }
     
     public static void socketServer(int port) throws Exception {

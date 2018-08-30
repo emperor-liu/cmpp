@@ -11,11 +11,11 @@
 	<property name="PATTERN"
 		value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n" />
 	<!-- test文件路径 -->
-	<property name="TEST_FILE_PATH" value="/Users/liujie/server/logs/cmcc-gateway" />
+	<property name="TEST_FILE_PATH" value="/Users/liujie/server/logs/cmcc-client" />
 	<!-- 开发文件路径 -->
-	<property name="DEV_FILE_PATH" value="/Users/liujie/server/logs/cmcc-gateway" />
+	<property name="DEV_FILE_PATH" value="/Users/liujie/server/logs/cmcc-client" />
 	<!-- pro文件路径 -->
-	<property name="PRO_FILE_PATH" value="/Users/liujie/server/logs/cmcc-gateway" />
+	<property name="PRO_FILE_PATH" value="/Users/liujie/server/logs/cmcc-client" />
 	
 	<springProfile name="dev">
         <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -23,7 +23,7 @@
                 <pattern>${PATTERN}</pattern>
             </encoder>
         </appender>
-        <logger name="com.lljqiu.tools.cmpp.gateway" level="debug" />
+        <logger name="com.lljqiu.tools.cmpp.client" level="debug" />
         <root level="info">
             <appender-ref ref="CONSOLE" />
         </root>
@@ -47,7 +47,7 @@
                 <MaxFileSize>10MB</MaxFileSize>
             </triggeringPolicy>
 		</appender>
-		<logger name="com.lljqiu.tools.cmpp.gateway" level="info" />
+		<logger name="com.lljqiu.tools.cmpp.client" level="info" />
 		<root level="info">
 			<appender-ref ref="TEST-FILE" />
 		</root>
@@ -71,7 +71,7 @@
 				<MaxFileSize>10MB</MaxFileSize>
 			</triggeringPolicy>
 		</appender>
-		<logger name="com.lljqiu.tools.cmpp.gateway" level="info" />
+		<logger name="com.lljqiu.tools.cmpp.client" level="info" />
 		<root level="info">
 			<appender-ref ref="PRO-FILE" />
 		</root>

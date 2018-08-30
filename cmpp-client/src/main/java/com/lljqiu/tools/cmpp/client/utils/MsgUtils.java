@@ -6,13 +6,11 @@
  * Create by name：liujie -- email: liujie@lljqiu.com
  * Copyright © 2015, 2017, www.lljqiu.com. All rights reserved.
  */
-package com.lljqiu.tools.cmpp.gateway.utils;
+package com.lljqiu.tools.cmpp.client.utils;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,19 +45,15 @@ public class MsgUtils {
     }
 
     /**
-     * Connect 成功后返回，其值通过单向MD5 hash计算得出，表示如下：
-     * AuthenticatorISMG =MD5（Status+AuthenticatorSource+shared secret）
+     * 用于鉴别源地址。其值通过单向MD5 hash计算得出，表示如下：
+     * AuthenticatorSource =
+     * MD5（Source_Addr+9 字节的0 +shared secret+timestamp）
+     * Shared secret 由中国移动与源地址实体事先商定，timestamp格式为：MMDDHHMMSS，即月日时分秒，10位。
      * @return
      */
-    public static byte[] getAuthenticatorISMG(int statis, String AuthenticatorSource, String secret) {
-        try {
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-            byte[] data = (statis +AuthenticatorSource + secret).getBytes();
-            return md5.digest(data);
-        } catch (NoSuchAlgorithmException e) {
-            logger.error("SP链接到ISMG拼接AuthenticatorSource失败：" + e.getMessage());
-            return null;
-        }
+    public static String getAuthenticatorSource(String spId, String secret,String timestamp) {
+        String data = spId + "\0\0\0\0\0\0\0\0\0" + secret + timestamp;
+        return Utils.encryptMD5(data);
     }
 
     /**

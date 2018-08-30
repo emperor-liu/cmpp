@@ -31,7 +31,6 @@ public class CmccAcceptor {
             acceptor.getFilterChain().addLast("logger", new LoggingFilter());
             acceptor.getFilterChain().addLast("myfliter", new ConnectionFilter());
             acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new MPCodecFactory("UTF-8")));// 指定编码过滤器
-//            acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));// 指定编码过滤器
             acceptor.getFilterChain().addLast("threadPool", new ExecutorFilter(Executors.newCachedThreadPool()));
             acceptor.getSessionConfig().setReadBufferSize(2048*5000);//发送缓冲区10M
 //            acceptor.getSessionConfig().set

@@ -8,6 +8,7 @@
  */
 package com.lljqiu.tools.cmpp.gateway.action;
 
+import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 
 import com.lljqiu.tools.cmpp.gateway.stack.BaseMessage;
@@ -21,4 +22,6 @@ import com.lljqiu.tools.cmpp.gateway.stack.BaseMessage;
 public interface ActionService {
 
     public void doProcess(IoSession session, BaseMessage command) throws Exception;
+    
+    public <T> T readMessage(IoBuffer ioBuffer) throws Exception;
 }

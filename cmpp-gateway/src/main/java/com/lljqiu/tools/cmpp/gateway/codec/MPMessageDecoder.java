@@ -8,6 +8,7 @@
  */
 package com.lljqiu.tools.cmpp.gateway.codec;
 
+import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,7 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
-import com.lljqiu.tools.cmpp.gateway.service.ReadMsgService;
+import com.lljqiu.tools.cmpp.gateway.action.ActionService;
+import com.lljqiu.tools.cmpp.gateway.context.MessageFactory;
 import com.lljqiu.tools.cmpp.gateway.stack.BaseMessage;
 import com.lljqiu.tools.cmpp.gateway.stack.MsgCommand;
 import com.lljqiu.tools.cmpp.gateway.stack.MsgConnect;
@@ -48,38 +50,42 @@ public class MPMessageDecoder extends CumulativeProtocolDecoder {
     @Override
     protected boolean doDecode(IoSession session, IoBuffer in, ProtocolDecoderOutput out) throws Exception {
         
-        MsgHead head = new MsgHead();
         if (in.remaining() < 4) {
             return false;
         }
         in.mark();
         BaseMessage message = new BaseMessage();
+        InetSocketAddress socketAddress = (InetSocketAddress) session.getRemoteAddress();
+        message.setClientIp(socketAddress.getAddress().getHostAddress());
+        
         Integer totalLength = in.getInt();
         logger.debug("totalLength={}",totalLength);
         message.setTotalLength(totalLength);
-        head.setTotalLength(totalLength);
         Integer commadnId = in.getInt();
         logger.debug("commadnId={}",commadnId);
         message.setMsgCommand(commadnId);
-        head.setCommandId(commadnId);
         Integer sequenceId = in.getInt();
-        logger.debug("commadnId={}",sequenceId);
+        logger.debug("sequenceId={}",sequenceId);
         message.setSequenceId(sequenceId);
-        head.setSequenceId(sequenceId);
         
-        switch (head.getCommandId()) {
+        MsgHead head = new MsgHead(totalLength,commadnId,sequenceId);
+        ActionService service = MessageFactory.createService(commadnId);
+        switch (commadnId) {
+        	case MsgCommand.CMPP_ACTIVE_TEST:
+        		logger.info("<{} active test,序列号：{}>" ,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), sequenceId);
+	            break;
             case MsgCommand.CMPP_CONNECT:
-                 MsgConnect connectReq = ReadMsgService.readConnect(in);
-                logger.info(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "链接短信网关,version:"
-                        + connectReq.getVersion() + " 序列号：" + connectReq.getSequenceId());
+            	MsgConnect connectReq = service.readMessage(in);
+            	connectReq.setHead(head);
+                logger.info("<{} 链接短信网关,version:{},序列号：{}>" ,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), connectReq.getVersion(), sequenceId);
                 message.setBodys((JSONObject)JSONObject.toJSON(connectReq));
-                message.setMsgCommand(MsgCommand.CMPP_CONNECT);
+                
                 break;
             case MsgCommand.CMPP_SUBMIT:
-                MsgSubmit submitInfo = ReadMsgService.readSubmit(in);
-                logger.info("{}链接短信网关,序列号：{}" ,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), submitInfo.getSequenceId());
+            	MsgSubmit submitInfo = service.readMessage(in);
+            	submitInfo.setHead(head);
+                logger.info("<{} 链接短信网关,序列号：{}>" ,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), sequenceId);
                 message.setBodys((JSONObject)JSONObject.toJSON(submitInfo));
-                message.setMsgCommand(MsgCommand.CMPP_SUBMIT);
                 break;
         }
         out.write(message);

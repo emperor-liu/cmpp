@@ -8,14 +8,11 @@
  */
 package com.lljqiu.tools.cmpp.gateway.stack;
 
-import org.apache.log4j.Logger;
-
 /**
  * 
  * Submit消息结构定义
  */
 public class MsgSubmit extends MsgHead {
-    private static Logger logger             = Logger.getLogger(MsgSubmit.class);
     private long          msgId              = 0;                                //信息标示
     private byte          pkTotal            = 0x01;                             //相同的msgId总数，从1开始
     private byte          pkNumber           = 0x01;                             //想用的msgId序号，从1开始

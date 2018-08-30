@@ -3,11 +3,9 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
-logging:
-  config: classpath:logback.xml
   
 #gatewar config
 gatewar:
   port: 7891
   version: 48
-  clientConfig: [{"spIp":"127.0.0.1","spId":"170417","sharedSecret":"170417","spCode":"106584040417","serviceId":"vpass"}]
+  clientConfig: [{"spIp":"127.0.0.1","spId":"170417","sharedSecret":"170417","spCode":"106584040417","serviceId":"vpass","version":"48"}]

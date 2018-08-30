@@ -13,6 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.lljqiu.tools.cmpp.gateway.action.ActionService;
 import com.lljqiu.tools.cmpp.gateway.stack.MsgCommand;
+import com.lljqiu.tools.cmpp.gateway.utils.Constants;
 
 /** 
  * ClassName: MessageFactory.java <br>
@@ -21,7 +22,7 @@ import com.lljqiu.tools.cmpp.gateway.stack.MsgCommand;
  * @date: 2018年3月15日<br>
  */
 public class MessageFactory {
-private static String BASE_PACKAGE = "com.lljqiu.tools.cmpp.gateway.action.";
+	private static String BASE_PACKAGE = "com.lljqiu.tools.cmpp.gateway.action.";
     
     public final static String CLASS_HEAD = "Action";
     
@@ -37,8 +38,8 @@ private static String BASE_PACKAGE = "com.lljqiu.tools.cmpp.gateway.action.";
 
     
     
-    protected static Class<?> getClazz(String head, int id) {
-        String key = head + id;
+    protected static Class<?> getClazz(String head, String id) {
+        String key = id + head;
         Class<?> c = clazz.get(key);
         if (c == null) {
             if (clazz_null.get(key) != null)
@@ -71,8 +72,8 @@ private static String BASE_PACKAGE = "com.lljqiu.tools.cmpp.gateway.action.";
      * @param commandCode
      * @return
      */
-    private static String generateSubPackage(String head, int commandCode) {
-        return head + commandCode;
+    private static String generateSubPackage(String head, String commandCode) {
+        return commandCode + head;
     }
 
     /** 
@@ -83,13 +84,16 @@ private static String BASE_PACKAGE = "com.lljqiu.tools.cmpp.gateway.action.";
      * @author name：liujie <br>email: jie_liu1@asdc.com.cn
      **/
     public static ActionService createService(int msgid) throws Exception {
-        int id = 001;
+        String id = Constants.ActionConstants.ACTIVE;
         switch (msgid) {
+	        case MsgCommand.CMPP_ACTIVE_TEST:
+	        	id = Constants.ActionConstants.ACTIVE;
+	        	break;
             case MsgCommand.CMPP_CONNECT:
-                id = 001;
+                id = Constants.ActionConstants.CONNECT;
                 break;
             case MsgCommand.CMPP_SUBMIT:
-                id = 002;
+                id = Constants.ActionConstants.SUBMIT;
                 break;
             default:
                 break;

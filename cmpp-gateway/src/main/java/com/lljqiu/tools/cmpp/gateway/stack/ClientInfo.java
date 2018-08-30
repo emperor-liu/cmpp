@@ -29,8 +29,18 @@ public class ClientInfo implements Serializable {
     private String            sharedSecret;
     private String            spCode;
     private String            serviceId;
+    private String            version;
 
-    /**
+    
+    public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	/**
      * @return the spIp
      */
     public String getSpIp() {

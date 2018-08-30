@@ -41,12 +41,7 @@ public class MessageHandler extends IoHandlerAdapter {
 
     @Override
     public void sessionClosed(IoSession session) throws Exception {
-        //TODO 清除断开连接的用户
         log.debug("sessionClosed()...sessionId=" + session.getId());
-//        String userId = (String) SessionUsers.getInstance().getSession(session.getId());
-//        if (StringUtils.isNotBlank(userId))
-//            SessionUsers.getInstance().clearSession(userId);
-//        SessionUsers.getInstance().clearSession(session.getId());
         session.close(true);
     }
 

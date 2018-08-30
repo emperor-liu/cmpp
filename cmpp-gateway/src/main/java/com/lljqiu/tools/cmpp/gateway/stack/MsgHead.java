@@ -45,11 +45,28 @@ public class MsgHead {
         return bous.toByteArray();
     }
 
+    public void setHead(MsgHead head){
+    	this.totalLength = head.getTotalLength();
+		this.commandId = head.getCommandId();
+		this.sequenceId = head.getSequenceId();
+    }
     public MsgHead() {
         super();
     }
 
-    public int getTotalLength() {
+    /**
+	 * @param totalLength
+	 * @param commandId
+	 * @param sequenceId
+	 */
+	public MsgHead(int totalLength, int commandId, int sequenceId) {
+		super();
+		this.totalLength = totalLength;
+		this.commandId = commandId;
+		this.sequenceId = sequenceId;
+	}
+
+	public int getTotalLength() {
         return totalLength;
     }
 
