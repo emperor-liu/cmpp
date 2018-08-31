@@ -1,3 +1,11 @@
+/**
+ * Project Name cmpp-client
+ * File Name package-info.java
+ * Package Name com.lljqiu.tools.cmpp.client.stack
+ * Create Time 2018年8月30日
+ * Create by name：liujie -- email: liujie@lljqiu.com
+ * Copyright © 2015, 2017, www.lljqiu.com. All rights reserved.
+ */
 package com.lljqiu.tools.cmpp.client.stack;
 
 import org.apache.mina.core.buffer.IoBuffer;

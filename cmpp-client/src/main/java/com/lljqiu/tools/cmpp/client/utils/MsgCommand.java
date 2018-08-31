@@ -1,5 +1,5 @@
 /**
- * Project Name cmpp-gateway
+ * Project Name cmpp-client
  * File Name package-info.java
  * Package Name com.lljqiu.tools.cmpp.gateway.stack
  * Create Time 2018年3月19日

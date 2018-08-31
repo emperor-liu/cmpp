@@ -1,5 +1,5 @@
 /**
- * Project Name cmpp-gateway
+ * Project Name cmpp-client
  * File Name package-info.java
  * Package Name com.lljqiu.tools.cmpp.gateway.codec
  * Create Time 2018年3月19日
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /** 
  * ClassName: MPMessageEncoder.java <br>
  * Description: <br>
- * Create by: name：liujie <br>email: jie_liu1@asdc.com.cn <br>
+ * Create by: name：liujie <br>email: liujie@lljqiu.com <br>
  * Create Time: 2017年6月6日<br>
  */
 public class MPMessageEncoder extends ProtocolEncoderAdapter {

@@ -9,6 +9,8 @@
 package com.lljqiu.tools.cmpp.client.utils;
 
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /** 
  * ClassName: Utils.java <br>
@@ -20,10 +22,11 @@ public class Utils {
 	private final static char[] hexDigits        = "0123456789ABCDEF".toCharArray();
 	
 	public static void main(String[] args) {
-		String authenticatorSource = MsgUtils.getAuthenticatorSource("170417", "170417", MsgUtils.getTimestamp());
-		System.out.println(authenticatorSource);
 	}
 	
+	public static String getNowData(){
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+	}
 	public static String encryptMD5(String data) {
         return data == null ? null : hashEncrypt(data, "MD5");
     }

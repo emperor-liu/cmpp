@@ -9,8 +9,6 @@
 package com.lljqiu.tools.cmpp.gateway.codec;
 
 import java.net.InetSocketAddress;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
@@ -27,11 +25,12 @@ import com.lljqiu.tools.cmpp.gateway.stack.MsgCommand;
 import com.lljqiu.tools.cmpp.gateway.stack.MsgConnect;
 import com.lljqiu.tools.cmpp.gateway.stack.MsgHead;
 import com.lljqiu.tools.cmpp.gateway.stack.MsgSubmit;
+import com.lljqiu.tools.cmpp.gateway.utils.Utils;
 
 /** 
  * ClassName: MPMessageDecoder.java <br>
  * Description: <br>
- * Create by: name：liujie <br>email: jie_liu1@asdc.com.cn <br>
+ * Create by: name：liujie <br>email: liujie@lljqiu.com <br>
  * Create Time: 2017年6月6日<br>
  */
 public class MPMessageDecoder extends CumulativeProtocolDecoder {
@@ -72,19 +71,28 @@ public class MPMessageDecoder extends CumulativeProtocolDecoder {
         ActionService service = MessageFactory.createService(commadnId);
         switch (commadnId) {
         	case MsgCommand.CMPP_ACTIVE_TEST:
-        		logger.info("<{} active test,序列号：{}>" ,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), sequenceId);
+        		logger.info("<{} active test,序列号：{}>" ,Utils.getNowData(), sequenceId);
 	            break;
             case MsgCommand.CMPP_CONNECT:
-            	MsgConnect connectReq = service.readMessage(in);
-            	connectReq.setHead(head);
-                logger.info("<{} 链接短信网关,version:{},序列号：{}>" ,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), connectReq.getVersion(), sequenceId);
-                message.setBodys((JSONObject)JSONObject.toJSON(connectReq));
+//            	MsgConnect msgConnect = new MsgConnect();
+//                byte[] sourceAddr = new byte[6];
+//                in.get(sourceAddr);
+//                msgConnect.setSourceAddr(new String(sourceAddr));
+//                byte[] aiByte = new byte[16];
+//                in.get(aiByte);
+//                msgConnect.setAuthenticatorSource(aiByte);
+//                msgConnect.setVersion(in.get());
+//                msgConnect.setTimestamp(in.get());
+            	MsgConnect msgConnect = service.readMessage(in);
+                msgConnect.setHead(head);
+                logger.info("<{} 链接短信网关,version:{},序列号：{}>" ,Utils.getNowData(), msgConnect.getVersion(), sequenceId);
+                message.setBodys((JSONObject)JSONObject.toJSON(msgConnect));
                 
                 break;
             case MsgCommand.CMPP_SUBMIT:
             	MsgSubmit submitInfo = service.readMessage(in);
             	submitInfo.setHead(head);
-                logger.info("<{} 链接短信网关,序列号：{}>" ,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), sequenceId);
+                logger.info("<{} 链接短信网关,序列号：{}>" ,Utils.getNowData(), sequenceId);
                 message.setBodys((JSONObject)JSONObject.toJSON(submitInfo));
                 break;
         }

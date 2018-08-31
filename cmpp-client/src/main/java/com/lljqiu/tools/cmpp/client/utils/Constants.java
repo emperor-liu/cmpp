@@ -19,4 +19,24 @@ public class Constants {
 	public static class ServerConfig{
 		public static GateWayConfig gatewayConfig = new GateWayConfig(ReadPropertiesUtil.getInstance().getCmppConfig());
 	}
+	
+	/**
+	 * action 常量
+	 * ClassName: Constants.java <br>
+	 * Description: <br>
+	 * Create by: name：liujie <br>email: liujie@lljqiu.com <br>
+	 * Create Time: 2018年8月30日<br>
+	 */
+	public static class ActionConstants{
+		/** 心跳链接 */
+		public final static String ACTIVE_RESP = "ActiveResp";
+		/** 短信链接*/
+		public final static String CONNECT_RESP = "ConnectResp";
+		/** 终止链接*/
+		public final static String TERMINATE_RESP = "TerminateResp";
+		/** 提交短信--下行*/
+		public final static String SUBMIT_RESP = "SubmitResp";
+		/** 短信下发*/
+		public final static String DELIVER_RESP = "DeliverResp";
+	}
 }

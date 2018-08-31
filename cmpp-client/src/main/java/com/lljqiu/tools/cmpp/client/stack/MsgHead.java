@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * Create Time: 2018年8月30日<br>
  */
 public class MsgHead {
-    private Logger logger = LoggerFactory.getLogger(MsgHead.class);
+    protected Logger logger = LoggerFactory.getLogger(MsgHead.class);
     private int    totalLength;                             //Unsigned Integer 消息总长度
     private int    commandId;                               //Unsigned Integer 命令类型
     private int    sequenceId;                              //Unsigned Integer 消息流水号,顺序累加,步长为1,循环使用（一对请求和应答消息的流水号必须相同）
@@ -60,7 +60,25 @@ public class MsgHead {
         super();
     }
 
-    public int getTotalLength() {
+    /**
+	 * @param totalLength2
+     * @param commandId 
+	 * @param sequenceId2
+	 */
+	public MsgHead(Integer totalLength,  Integer commandId, Integer sequenceId) {
+		super();
+		this.totalLength = totalLength;
+		this.commandId = commandId;
+		this.sequenceId = sequenceId;
+	}
+	
+	public void setHead(MsgHead head){
+    	this.totalLength = head.getTotalLength();
+		this.commandId = head.getCommandId();
+		this.sequenceId = head.getSequenceId();
+    }
+
+	public int getTotalLength() {
         return totalLength;
     }
 

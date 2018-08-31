@@ -14,16 +14,17 @@ import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolEncoderAdapter;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /** 
  * ClassName: MPMessageEncoder.java <br>
  * Description: <br>
- * Create by: name：liujie <br>email: jie_liu1@asdc.com.cn <br>
+ * Create by: name：liujie <br>email: liujie@lljqiu.com <br>
  * Create Time: 2017年6月6日<br>
  */
 public class MPMessageEncoder extends ProtocolEncoderAdapter {
-    
+	Logger logger = LoggerFactory.getLogger(MPMessageEncoder.class);
     private String charset;
 
     public MPMessageEncoder() {
@@ -41,7 +42,7 @@ public class MPMessageEncoder extends ProtocolEncoderAdapter {
     public void encode(IoSession paramIoSession, Object message, ProtocolEncoderOutput out)
             throws Exception {
         byte[] bytes = (byte[])message;
-        LoggerFactory.getLogger(MPMessageEncoder.class).debug("<encode message "+Arrays.toString(bytes)+">");
+		logger.debug("<encode message {}>",Arrays.toString(bytes));
         IoBuffer buf = IoBuffer.allocate(bytes.length, false);
         
         buf.put(bytes);

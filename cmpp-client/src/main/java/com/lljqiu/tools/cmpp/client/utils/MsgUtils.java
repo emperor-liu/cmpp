@@ -1,5 +1,5 @@
 /**
- * Project Name cmpp-gateway
+ * Project Name cmpp-client
  * File Name package-info.java
  * Package Name com.lljqiu.tools.cmpp.gateway.utils
  * Create Time 2018年3月19日
@@ -11,6 +11,8 @@ package com.lljqiu.tools.cmpp.client.utils;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,9 +53,15 @@ public class MsgUtils {
      * Shared secret 由中国移动与源地址实体事先商定，timestamp格式为：MMDDHHMMSS，即月日时分秒，10位。
      * @return
      */
-    public static String getAuthenticatorSource(String spId, String secret,String timestamp) {
-        String data = spId + "\0\0\0\0\0\0\0\0\0" + secret + timestamp;
-        return Utils.encryptMD5(data);
+    public static byte[] getAuthenticatorSource(String spId, String secret,String timestamp) {
+    	try {
+			MessageDigest md5 = MessageDigest.getInstance("MD5");
+			String data = spId + "\0\0\0\0\0\0\0\0\0" + secret + timestamp;
+			return md5.digest(data.getBytes());
+		} catch (NoSuchAlgorithmException e) {
+			logger.error("SP链接到ISMG拼接AuthenticatorSource失败:{}" , e);
+			return null;
+		}
     }
 
     /**

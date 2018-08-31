@@ -16,7 +16,7 @@ import org.apache.mina.filter.codec.ProtocolEncoder;
 /** 
  * ClassName: MPCodecFactory.java <br>
  * Description: <br>
- * Create by: name：liujie <br>email: jie_liu1@asdc.com.cn <br>
+ * Create by: name：liujie <br>email: liujie@lljqiu.com <br>
  * Create Time: 2017年6月6日<br>
  */
 public class MPCodecFactory implements ProtocolCodecFactory {

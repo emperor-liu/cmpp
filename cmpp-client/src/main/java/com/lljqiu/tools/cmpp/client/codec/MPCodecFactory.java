@@ -1,5 +1,5 @@
 /**
- * Project Name cmpp-gateway
+ * Project Name cmpp-client
  * File Name package-info.java
  * Package Name com.lljqiu.tools.cmpp.gateway.codec
  * Create Time 2018年3月19日
@@ -16,7 +16,7 @@ import org.apache.mina.filter.codec.ProtocolEncoder;
 /** 
  * ClassName: MPCodecFactory.java <br>
  * Description: <br>
- * Create by: name：liujie <br>email: jie_liu1@asdc.com.cn <br>
+ * Create by: name：liujie <br>email: liujie@lljqiu.com <br>
  * Create Time: 2017年6月6日<br>
  */
 public class MPCodecFactory implements ProtocolCodecFactory {
@@ -32,7 +32,7 @@ public class MPCodecFactory implements ProtocolCodecFactory {
 
     public MPCodecFactory(String charset) {
         encoder = new MPMessageEncoder(charset);
-//        decoder = new MPMessageDecoder(charset);
+        decoder = new MPMessageDecoder(charset);
     }
 
     public ProtocolEncoder getEncoder(IoSession session) throws Exception {

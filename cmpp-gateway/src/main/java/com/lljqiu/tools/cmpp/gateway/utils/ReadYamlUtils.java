@@ -38,40 +38,14 @@ public class ReadYamlUtils {
     static Map configMap   = new HashMap();
     static {
         try {
-            File dumpFile = new File(ReadYamlUtils.class.getClassLoader().getResource("").getPath()
+            File applyFile = new File(ReadYamlUtils.class.getClassLoader().getResource("").getPath()
                     + "application.yaml");
             Yaml yaml = new Yaml();
-            Map father = yaml.loadAs(new FileInputStream(dumpFile), HashMap.class);
-            String configFileName = "application-dev.yaml";
-            for (Object key : father.keySet()) {
-                if ("spring".equals(key)) {
-                    Map applicationMap = (Map) father.get(key);
-                    Map config = (Map) applicationMap.get("profiles");
-                    String type = (String) config.get("active");
-                    switch (type) {
-                        case "dev":
-                            configFileName = "application-dev.yaml";
-                            break;
-                        case "prod":
-                            configFileName = "application-prod.yaml";
-                            break;
-                        case "test":
-                            configFileName = "application-test.yaml";
-                            break;
-                        default:
-                            configFileName = "application-dev.yaml";
-                            break;
-                    }
-                }
-            }
-            File applyFile = new File(ReadYamlUtils.class.getClassLoader().getResource("").getPath()
-                    + configFileName);
             Map applyFather = yaml.loadAs(new FileInputStream(applyFile), HashMap.class);
             for (Object key : applyFather.keySet()) {
                 if ("gatewar".equals(key)) {
                     configMap = (Map) applyFather.get(key);
                 }
-                
             }
         } catch (FileNotFoundException e) {
             LoggerFactory.getLogger(ReadYamlUtils.class).error("读取配置文件异常", e);

@@ -11,7 +11,7 @@ package com.lljqiu.tools.cmpp.gateway.stack;
 /** 
  * ClassName: MsgSubmitResp.java <br>
  * Description: Submit消息结构应答定义<br>
- * Create by: name：liujie <br>email: jie_liu1@asdc.com.cn <br>
+ * Create by: name：liujie <br>email: liujie@lljqiu.com <br>
  * Create Time: 2017年4月24日<br>
  */
 public class MsgSubmitResp extends MsgHead {

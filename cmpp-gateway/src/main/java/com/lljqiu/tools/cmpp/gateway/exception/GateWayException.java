@@ -57,7 +57,7 @@ public class GateWayException extends RuntimeException {
      * @param errorCode
      * @param errorMessage
      * @return void
-     * @author name：liujie <br>email: jie_liu1@asdc.com.cn
+     * @author name：liujie <br>email: liujie@lljqiu.com
      **/
     public static void checkCondition(boolean expression, String errorMessage) {
         if (expression) {
@@ -71,7 +71,7 @@ public class GateWayException extends RuntimeException {
      * @param errorCode
      * @param errorMessage
      * @return void
-     * @author name：liujie <br>email: jie_liu1@asdc.com.cn
+     * @author name：liujie <br>email: liujie@lljqiu.com
      **/
     public static void checkCondition(boolean expression, Integer errorCode, String errorMessage) {
         if (expression) {

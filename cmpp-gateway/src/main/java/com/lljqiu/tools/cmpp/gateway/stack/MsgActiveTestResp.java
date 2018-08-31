@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 /** 
  * ClassName: MsgActiveTestResp.java <br>
  * Description: 链路检查消息结构定义<br>
- * Create by: name：liujie <br>email: jie_liu1@asdc.com.cn <br>
+ * Create by: name：liujie <br>email: liujie@lljqiu.com <br>
  * Create Time: 2017年4月24日<br>
  */
 public class MsgActiveTestResp extends MsgHead {

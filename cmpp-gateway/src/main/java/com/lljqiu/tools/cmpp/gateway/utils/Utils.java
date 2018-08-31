@@ -9,6 +9,8 @@
 package com.lljqiu.tools.cmpp.gateway.utils;
 
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /** 
  * ClassName: Utils.java <br>
@@ -25,6 +27,10 @@ public class Utils {
 //		int b = 48;
 //		System.out.println((byte) 0x30);
 //		System.out.println((byte) 48);
+	}
+	
+	public static String getNowData(){
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	}
 	
 	public static String encryptMD5(String data) {

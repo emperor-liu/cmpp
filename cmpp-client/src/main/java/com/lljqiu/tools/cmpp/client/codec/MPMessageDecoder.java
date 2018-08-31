@@ -1,5 +1,5 @@
 /**
- * Project Name cmpp-gateway
+ * Project Name cmpp-client
  * File Name package-info.java
  * Package Name com.lljqiu.tools.cmpp.gateway.codec
  * Create Time 2018年3月19日
@@ -15,10 +15,18 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.lljqiu.tools.cmpp.client.action.ActionService;
+import com.lljqiu.tools.cmpp.client.handler.MessageFactory;
+import com.lljqiu.tools.cmpp.client.stack.BaseMessage;
+import com.lljqiu.tools.cmpp.client.stack.MsgConnectResp;
+import com.lljqiu.tools.cmpp.client.stack.MsgHead;
+import com.lljqiu.tools.cmpp.client.utils.MsgCommand;
+import com.lljqiu.tools.cmpp.client.utils.Utils;
+
 /** 
  * ClassName: MPMessageDecoder.java <br>
  * Description: <br>
- * Create by: name：liujie <br>email: jie_liu1@asdc.com.cn <br>
+ * Create by: name：liujie <br>email: liujie@lljqiu.com <br>
  * Create Time: 2017年6月6日<br>
  */
 public class MPMessageDecoder extends CumulativeProtocolDecoder {
@@ -36,8 +44,48 @@ public class MPMessageDecoder extends CumulativeProtocolDecoder {
 
     @Override
     protected boolean doDecode(IoSession session, IoBuffer in, ProtocolDecoderOutput out) throws Exception {
-    	logger.debug("他会来这里吗？？");
-    	return true;
+    	if (in.remaining() < 4) {
+            return false;
+        }
+        in.mark();
+        BaseMessage message = new BaseMessage();
+        Integer totalLength = in.getInt();
+        logger.debug("totalLength={}",totalLength);
+        message.setTotalLength(totalLength);
+        Integer commadnId = in.getInt();
+        logger.debug("commadnId={}",commadnId);
+        message.setMsgCommand(commadnId);
+        Integer sequenceId = in.getInt();
+        logger.debug("sequenceId={}",sequenceId);
+        message.setSequenceId(sequenceId);
+        
+        MsgHead head = new MsgHead(totalLength,commadnId,sequenceId);
+        ActionService service = MessageFactory.createService(commadnId);
+        switch (commadnId) {
+        	case MsgCommand.CMPP_ACTIVE_TEST_RESP:
+        		logger.info("<心跳响应，不予处理>");
+        		break;
+        	case MsgCommand.CMPP_CONNECT_RESP:
+        		logger.info("<链接网关响应>");
+        		MsgConnectResp connectResp = service.readMessage(in);
+        		connectResp.setHead(head);
+        		logger.info("<{}链接短信网关,状态:{} ,序列号：", Utils.getNowData() ,connectResp.getStatusStr(), sequenceId);
+        		
+        		break;
+        	case MsgCommand.CMPP_SUBMIT_RESP:
+        		logger.info("<发送下行消息响应>");
+        		service.readMessage(in);
+        		break;
+        }
+        
+        out.write(message);
+        in.mark();
+
+        if(in.remaining() > 0){
+            return true;
+        }
+        
+        return false;
     }
 
     /**

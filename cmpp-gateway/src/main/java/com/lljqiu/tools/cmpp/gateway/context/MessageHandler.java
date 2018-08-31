@@ -3,8 +3,8 @@
  * File Name MessageHandler.java
  * Package Name com.lljqiu.tools.pushServer.context
  * Create Time 2018年3月15日
- * Create by name：liujie -- email: jie_liu1@asdc.com.cn
- * Copyright © 2006, 2017, ASDC DAI. All rights reserved.
+ * Create by name：liujie -- email: liujie@lljqiu.com
+ * Copyright © 2015, 2017, www.lljqiu.com. All rights reserved.
  */
 package com.lljqiu.tools.cmpp.gateway.context;
 
@@ -20,7 +20,7 @@ import com.lljqiu.tools.cmpp.gateway.stack.BaseMessage;
 /** 
  * ClassName: MessageHandler.java <br>
  * Description: 服务端IO处理器<br>
- * @author name：liujie <br>email: jie_liu1@asdc.com.cn <br>
+ * @author name：liujie <br>email: liujie@lljqiu.com <br>
  * @date: 2018年3月15日<br>
  */
 public class MessageHandler extends IoHandlerAdapter {

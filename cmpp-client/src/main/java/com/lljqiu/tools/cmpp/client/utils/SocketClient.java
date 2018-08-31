@@ -83,10 +83,10 @@ public class SocketClient {
 			    connPushServer();
 			}
 			serverSession.write(data);
-			closeSession();
+//			closeSession();
 		} catch (Exception e) {
 			log.error("sendMessage error {}", e.getMessage());
-			closeSession();
+//			closeSession();
 		}
     }
 }

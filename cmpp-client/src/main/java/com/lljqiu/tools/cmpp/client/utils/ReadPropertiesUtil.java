@@ -1,10 +1,10 @@
 /**
- * Project Name vss-commons
+ * Project Name cmpp-client
  * File Name package-info.java
- * Package Name com.asdc.vss.commons.utils
- * Create Time 2017年3月29日
- * Create by name：liujie -- email: jie_liu1@asdc.com.cn
- * Copyright © 2006, 2017, ASDC DAI. All rights reserved.
+ * Package Name com.lljqiu.tools.cmpp.client.utils
+ * Create Time 2018年8月30日
+ * Create by name：liujie -- email: liujie@lljqiu.com
+ * Copyright © 2015, 2017, www.lljqiu.com. All rights reserved.
  */
 package com.lljqiu.tools.cmpp.client.utils;
 
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /** 
  * ClassName: ReadPropertiesUtil.java <br>
  * Description: 读取配置文件 (.Properties)<br>
- * Create by: name：liujie <br>email: jie_liu1@asdc.com.cn <br>
+ * Create by: name：liujie <br>email: liujie@lljqiu.com <br>
  * Create Time: 2017年3月29日<br>
  */
 public class ReadPropertiesUtil {

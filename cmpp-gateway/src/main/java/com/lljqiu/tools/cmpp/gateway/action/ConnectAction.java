@@ -36,8 +36,19 @@ public class ConnectAction extends ActionFactoy {
 	 */
 	@Override
 	protected void exec() throws Exception {
-		logger.info("接收 Connect 消息");
-		logger.info("Connect={}",message);
+		logger.info("<接收 Connect 消息>");
+		
+		if(checkBody()){
+			MsgConnectResp connectResp = new MsgConnectResp();
+			connectResp.setTotalLength(Constants.MessageTotalLength.CONNECT);//消息总长度，级总字节数:4+4+4(消息头)+6+16+1+4(消息主体)
+	        connectResp.setCommandId(MsgCommand.CMPP_CONNECT_RESP);//标识创建连接
+	        connectResp.setSequenceId(message.getSequenceId());//序列，由我们指定
+	        connectResp.setStatus(0x0001);
+	        connectResp.setVersion(Constants.CMPP_VERSION);
+	        logger.info("<Connect 响应消息{}>",ToStringBuilder.reflectionToString(connectResp));
+	        session.write(connectResp.toByteArry());
+	        return ;
+		}
 		MsgConnectResp connectResp = new MsgConnectResp();
         connectResp.setTotalLength(Constants.MessageTotalLength.CONNECT);//消息总长度，级总字节数:4+4+4(消息头)+6+16+1+4(消息主体)
         connectResp.setCommandId(MsgCommand.CMPP_CONNECT_RESP);//标识创建连接
@@ -56,38 +67,30 @@ public class ConnectAction extends ActionFactoy {
     	
         connectResp.setAuthenticatorISMG(MsgUtils.getAuthenticatorISMG(status, authenticatorSource, sharedSecret));
         connectResp.setVersion(Constants.CMPP_VERSION);
-        logger.debug("{}响应消息{}",MsgCommand.CMPP_CONNECT_RESP,ToStringBuilder.reflectionToString(connectResp));
+        logger.info("<Connect 响应消息{}>",ToStringBuilder.reflectionToString(connectResp));
         session.write(connectResp.toByteArry());
         
 	}
-	
 	
 
 	/* (non-Javadoc)
 	 * @see com.lljqiu.tools.cmpp.gateway.action.ActionFactoy#readMessage()
 	 */
-	@SuppressWarnings({ "finally", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	@Override
 	protected <T> T readMessage() throws Exception {
 
         MsgConnect msgConnect = new MsgConnect();
-
-        try {
-            byte[] sourceAddr = new byte[6];
-            ioBuffer.get(sourceAddr);
-            msgConnect.setSourceAddr(new String(sourceAddr));
-            byte[] aiByte = new byte[16];
-            ioBuffer.get(aiByte);
-            msgConnect.setAuthenticatorSource(aiByte);
-            msgConnect.setVersion(ioBuffer.get());
-            msgConnect.setTimestamp(ioBuffer.get());
-
-        } catch (Exception e) {
-            logger.info("read msg connect error{}" , e.getMessage());
-            throw new GateWayException("read msg connect error" + e.getMessage());
-        }finally {
-        	return (T) msgConnect;
-		}
+        byte[] sourceAddr = new byte[6];
+        ioBuffer.get(sourceAddr);
+        msgConnect.setSourceAddr(new String(sourceAddr));
+        byte[] aiByte = new byte[16];
+        ioBuffer.get(aiByte);
+        msgConnect.setAuthenticatorSource(aiByte);
+        msgConnect.setVersion(ioBuffer.get());
+        msgConnect.setTimestamp(ioBuffer.get());
+        return (T) msgConnect;
+        	
 	}
 
 }

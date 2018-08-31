@@ -1,19 +1,19 @@
 /**
- * Project Name pushServer
- * File Name MessageFactory.java
- * Package Name com.lljqiu.tools.pushServer.context
- * Create Time 2018年3月15日
+ * Project Name cmpp-client
+ * File Name package-info.java
+ * Package Name com.lljqiu.tools.cmpp.client.handler
+ * Create Time 2018年8月30日
  * Create by name：liujie -- email: liujie@lljqiu.com
  * Copyright © 2015, 2017, www.lljqiu.com. All rights reserved.
  */
-package com.lljqiu.tools.cmpp.gateway.context;
+package com.lljqiu.tools.cmpp.client.handler;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.lljqiu.tools.cmpp.gateway.action.ActionService;
-import com.lljqiu.tools.cmpp.gateway.stack.MsgCommand;
-import com.lljqiu.tools.cmpp.gateway.utils.Constants;
+import com.lljqiu.tools.cmpp.client.action.ActionService;
+import com.lljqiu.tools.cmpp.client.utils.Constants;
+import com.lljqiu.tools.cmpp.client.utils.MsgCommand;
 
 /** 
  * ClassName: MessageFactory.java <br>
@@ -22,7 +22,7 @@ import com.lljqiu.tools.cmpp.gateway.utils.Constants;
  * @date: 2018年3月15日<br>
  */
 public class MessageFactory {
-	private static String BASE_PACKAGE = "com.lljqiu.tools.cmpp.gateway.action.";
+	private static String BASE_PACKAGE = "com.lljqiu.tools.cmpp.client.action.";
     
     public final static String CLASS_HEAD = "Action";
     
@@ -84,16 +84,16 @@ public class MessageFactory {
      * @author name：liujie <br>email: liujie@lljqiu.com
      **/
     public static ActionService createService(int msgid) throws Exception {
-        String id = Constants.ActionConstants.ACTIVE;
+        String id = Constants.ActionConstants.ACTIVE_RESP;
         switch (msgid) {
-	        case MsgCommand.CMPP_ACTIVE_TEST:
-	        	id = Constants.ActionConstants.ACTIVE;
+	        case MsgCommand.CMPP_ACTIVE_TEST_RESP:
+	        	id = Constants.ActionConstants.ACTIVE_RESP;
 	        	break;
-            case MsgCommand.CMPP_CONNECT:
-                id = Constants.ActionConstants.CONNECT;
+            case MsgCommand.CMPP_CONNECT_RESP:
+                id = Constants.ActionConstants.CONNECT_RESP;
                 break;
-            case MsgCommand.CMPP_SUBMIT:
-                id = Constants.ActionConstants.SUBMIT;
+            case MsgCommand.CMPP_SUBMIT_RESP:
+                id = Constants.ActionConstants.SUBMIT_RESP;
                 break;
             default:
                 break;
