@@ -22,10 +22,10 @@ public class Utils {
 	private final static char[] hexDigits        = "0123456789ABCDEF".toCharArray();
 	
 	public static void main(String[] args) {
-//		byte a = 0x30;
+		byte a = 0x30;
 //		byte b1 = 0x30;
 //		int b = 48;
-//		System.out.println((byte) 0x30);
+		System.out.println(a);
 //		System.out.println((byte) 48);
 	}
 	
@@ -47,14 +47,14 @@ public class Utils {
 	private static String hashEncrypt(String data, String algorithm) {
         try {
             MessageDigest md = MessageDigest.getInstance(algorithm);
-            md.update(data.getBytes());
-            return bytes2Hex(md.digest());
+            
+            return bytes2Hex(md.digest(data.getBytes()));
         } catch (Exception never) {
             throw new RuntimeException("加密失败");
         }
     }
 	
-	private static String bytes2Hex(byte[] bytes) {
+	public static String bytes2Hex(byte[] bytes) {
         int len = bytes.length;
         char[] str = new char[len * 2];
         for (int i = 0; i < len; i++) {

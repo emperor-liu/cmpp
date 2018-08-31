@@ -57,9 +57,20 @@ public class MsgUtils {
             byte[] data = (statis +AuthenticatorSource + secret).getBytes();
             return md5.digest(data);
         } catch (NoSuchAlgorithmException e) {
-            logger.error("SP链接到ISMG拼接AuthenticatorSource失败：" + e.getMessage());
+            logger.error("拼接getAuthenticatorISMG失败：" + e.getMessage());
             return null;
         }
+    }
+    public static byte[] getAuthenticatorSource(String spId, String secret,String timestamp) {
+    	try {
+			MessageDigest md5 = MessageDigest.getInstance("MD5");
+			String data = spId + "\0\0\0\0\0\0\0\0\0" + secret + timestamp;
+			byte[] digest = md5.digest(data.getBytes());
+			return digest;
+		} catch (NoSuchAlgorithmException e) {
+			logger.error("SP链接到ISMG拼接AuthenticatorSource失败:{}" , e);
+			return null;
+		}
     }
 
     /**

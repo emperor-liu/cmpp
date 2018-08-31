@@ -23,7 +23,7 @@ public class ConnectRespAction extends ActionFactoy {
 	 */
 	@Override
 	protected void exec() throws Exception {
-		// TODO Auto-generated method stub
+		System.out.println("接收到 Server 端响应"+message.toString());
 
 	}
 
@@ -38,7 +38,7 @@ public class ConnectRespAction extends ActionFactoy {
         byte[] ismg = new byte[16];
         ioBuffer.get(ismg);
         connectResp.setAuthenticatorISMG(ismg);
-        connectResp.setVersion(ioBuffer.get());
+        connectResp.setVersion((byte)ioBuffer.getInt());
 		return (T) connectResp;
 	}
 

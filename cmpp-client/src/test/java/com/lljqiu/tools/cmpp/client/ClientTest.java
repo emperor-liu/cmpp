@@ -8,6 +8,8 @@
  */
 package com.lljqiu.tools.cmpp.client;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,18 +32,25 @@ import com.lljqiu.tools.cmpp.client.utils.SocketClient;
 @SpringBootTest
 public class ClientTest {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		MsgConnect connect = new MsgConnect();
         connect.setTotalLength(12 + 6 + 16 + 1 + 4);//消息总长度，级总字节数:4+4+4(消息头)+6+16+1+4(消息主体)
         connect.setCommandId(MsgCommand.CMPP_CONNECT);//标识创建连接
         connect.setSequenceId(MsgUtils.getSequence());//序列，由我们指定
         connect.setSourceAddr(Constants.ServerConfig.gatewayConfig.getSpId());//我们的企业代码
-        byte[] authenticatorSource = MsgUtils.getAuthenticatorSource(Constants.ServerConfig.gatewayConfig.getSpId(), Constants.ServerConfig.gatewayConfig.getSharedSecret(), MsgUtils.getTimestamp());
-		connect.setAuthenticatorSource(authenticatorSource);//md5(企业代码+密匙+时间戳)
         connect.setTimestamp(Integer.parseInt(MsgUtils.getTimestamp()));//时间戳(MMDDHHMMSS)
-        connect.setVersion((byte) 0x30);//版本号 高4bit为3，低4位为0
+        byte[] authenticatorSource = MsgUtils.getAuthenticatorSource(Constants.ServerConfig.gatewayConfig.getSpId(), Constants.ServerConfig.gatewayConfig.getSharedSecret(), connect.getTimestamp()+"");
+		connect.setAuthenticatorSource(authenticatorSource);//md5(企业代码+密匙+时间戳)
+		connect.setVersion((byte) 0x30);//版本号 高4bit为3，低4位为0
+        System.out.println(Arrays.toString(connect.toByteArry()));
         SocketClient.getInstance().sendMessage(connect.toByteArry());
+//		int parseInt = Integer.parseInt(MsgUtils.getTimestamp());
+//		System.out.println(parseInt);
+//		ByteArrayOutputStream bous = new ByteArrayOutputStream();
+//        DataOutputStream dous = new DataOutputStream(bous);
+//        dous.write(parseInt);
+        
 	}
 	@Test
 	public void test(){

@@ -42,7 +42,7 @@ public class MsgConnect extends MsgHead {
             MsgUtils.writeString(dous, this.sourceAddr, 6);
             dous.write(authenticatorSource);
             dous.writeByte(0x30);
-            dous.writeInt(Integer.parseInt(MsgUtils.getTimestamp()));
+            dous.writeInt(timestamp);
             dous.close();
         } catch (IOException e) {
             logger.error("封装链接二进制数组失败。");

@@ -18,6 +18,7 @@ import com.lljqiu.tools.cmpp.gateway.exception.GateWayException;
 import com.lljqiu.tools.cmpp.gateway.stack.BaseMessage;
 import com.lljqiu.tools.cmpp.gateway.stack.ClientInfo;
 import com.lljqiu.tools.cmpp.gateway.utils.EhCache;
+import com.lljqiu.tools.cmpp.gateway.utils.MsgUtils;
 import com.lljqiu.tools.cmpp.gateway.utils.Utils;
 
 /** 
@@ -54,16 +55,18 @@ public abstract class ActionFactoy implements ActionService {
     	// 企业编码 也就是 SP_Id
     	String sourceAddr = message.getBodys().getString("sourceAddr");
     	// 客户端签名
-    	String authenticatorSource = message.getBodys().getString("authenticatorSource");
+    	String authenticatorSource = message.getBodys().getString("authenticatorSourceStr");
     	String timestamp = message.getBodys().getString("timestamp");
-    	logger.debug("<request sourceAddr ={},AuthenticatorSource={}>",sourceAddr,new String(authenticatorSource));
-		//（Source_Addr+9 字节的0 +shared secret+timestamp）
-    	String data = sourceAddr+"\0\0\0\0\0\0\0\0\0"+clientInfo.getSharedSecret() + timestamp;
-    	String sign =  Utils.encryptMD5(data);
+    	logger.debug("<request sourceAddr ={}, AuthenticatorSource={}>",sourceAddr,authenticatorSource);
+    	byte[] serverAuth = MsgUtils.getAuthenticatorSource(sourceAddr,clientInfo.getSharedSecret(),timestamp);
+    	String sign =  Utils.bytes2Hex(serverAuth);
+    	logger.debug("<serverSign={},clientSign={}>",sign,authenticatorSource);
         boolean flag = sign.equals(authenticatorSource);
         GateWayException.checkCondition(!flag, 0x0003, "认证失败");
+        
         String clientVersion = message.getBodys().getString("version");
-        GateWayException.checkCondition(clientVersion.equals(clientInfo.getVersion()), 0x0004, "版本不一致");
+        logger.debug("<clientVersion={},serverVersion={}>",clientVersion,clientInfo.getVersion());
+        GateWayException.checkCondition(!clientVersion.equals(clientInfo.getVersion()), 0x0004, "版本不一致");
     }
     
     protected abstract void exec() throws Exception;
@@ -82,7 +85,6 @@ public abstract class ActionFactoy implements ActionService {
     public <T> T readMessage(IoBuffer ioBuffer) throws Exception{
     	try {
     		this.ioBuffer = ioBuffer;
-    		logger.debug("this.ioBuffer{}",this.ioBuffer);
     		return readMessage();
     	} catch (Exception e) {
     		throw new GateWayException("read msg connect error "+ e.getMessage());

@@ -24,7 +24,13 @@ public class BaseMessage {
     private JSONObject bodys;
     
 
-    public JSONObject getBodys() {
+    @Override
+	public String toString() {
+		return "BaseMessage [MsgCommand=" + MsgCommand + ", totalLength=" + totalLength + ", sequenceId=" + sequenceId
+				+ ", bodys=" + bodys.toJSONString() + "]";
+	}
+
+	public JSONObject getBodys() {
         return bodys;
     }
 

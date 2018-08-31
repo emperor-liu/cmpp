@@ -15,6 +15,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -57,7 +58,10 @@ public class MsgUtils {
     	try {
 			MessageDigest md5 = MessageDigest.getInstance("MD5");
 			String data = spId + "\0\0\0\0\0\0\0\0\0" + secret + timestamp;
-			return md5.digest(data.getBytes());
+			System.out.println(data);
+			byte[] digest = md5.digest(data.getBytes());
+			System.out.println(Arrays.toString(digest));
+			return digest;
 		} catch (NoSuchAlgorithmException e) {
 			logger.error("SP链接到ISMG拼接AuthenticatorSource失败:{}" , e);
 			return null;

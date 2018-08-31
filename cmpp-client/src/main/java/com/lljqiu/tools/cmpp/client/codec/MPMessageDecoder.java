@@ -15,6 +15,7 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lljqiu.tools.cmpp.client.action.ActionService;
 import com.lljqiu.tools.cmpp.client.handler.MessageFactory;
 import com.lljqiu.tools.cmpp.client.stack.BaseMessage;
@@ -69,8 +70,8 @@ public class MPMessageDecoder extends CumulativeProtocolDecoder {
         		logger.info("<链接网关响应>");
         		MsgConnectResp connectResp = service.readMessage(in);
         		connectResp.setHead(head);
-        		logger.info("<{}链接短信网关,状态:{} ,序列号：", Utils.getNowData() ,connectResp.getStatusStr(), sequenceId);
-        		
+        		message.setBodys((JSONObject)JSONObject.toJSON(connectResp));
+        		logger.info("<{} 链接短信网关,状态:{} ,序列号：{}", Utils.getNowData() ,connectResp.getStatusStr(), sequenceId);
         		break;
         	case MsgCommand.CMPP_SUBMIT_RESP:
         		logger.info("<发送下行消息响应>");

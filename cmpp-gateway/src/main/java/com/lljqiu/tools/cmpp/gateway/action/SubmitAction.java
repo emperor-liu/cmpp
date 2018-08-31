@@ -90,7 +90,7 @@ public class SubmitAction extends ActionFactoy {
 		byte[] LinkID = new byte[20];
 		ioBuffer.get(LinkID);
 		submit.setLinkID(new String(LinkID));
-		logger.debug("client submit info is {}",submit.toString());
+		
 		return (T) submit;
 
     }

@@ -1,5 +1,5 @@
 =================================================================
-//           :: projectName :: ${application.name}                      //
+//           :: projectName :: ${application.name}                     //
 //           :: projectVersion :: ${application.version}                        //
 //           :: Spring Boot :: ${spring-boot.version}                   //
 =================================================================

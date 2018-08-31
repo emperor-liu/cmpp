@@ -8,6 +8,8 @@
  */
 package com.lljqiu.tools.cmpp.gateway.stack;
 
+import com.lljqiu.tools.cmpp.gateway.utils.Utils;
+
 /**
  * SP请求连接到ISMG消息体定义CMPP_CONNECT操作的目的是SP向ISMG注册作为一个合法SP身份，
  * 若注册成功后即建立了应用层的连接，此后SP可以通过此ISMG接收和发送短信。<br/>
@@ -26,7 +28,18 @@ public class MsgConnect extends MsgHead {
     private byte   version;             //双方协商的版本号(高位4bit表示主版本号,低位4bit表示次版本号)，对于3.0的版本，高4bit为3，低4位为0
     private int    timestamp;           //时间戳的明文,由客户端产生,格式为MMDDHHMMSS，即月日时分秒，10位数字的整型，右对齐 。
 
-    public String getSourceAddr() {
+    private String authenticatorSourceStr;
+    
+    
+    public String getAuthenticatorSourceStr() {
+		return authenticatorSourceStr;
+	}
+
+	public void setAuthenticatorSourceStr(String authenticatorSourceStr) {
+		this.authenticatorSourceStr = authenticatorSourceStr;//new String(this.authenticatorSource);
+	}
+
+	public String getSourceAddr() {
         return sourceAddr;
     }
 
@@ -40,6 +53,7 @@ public class MsgConnect extends MsgHead {
 
     public void setAuthenticatorSource(byte[] authenticatorSource) {
         this.authenticatorSource = authenticatorSource;
+        this.authenticatorSourceStr = Utils.bytes2Hex(this.authenticatorSource);
     }
 
     public byte getVersion() {

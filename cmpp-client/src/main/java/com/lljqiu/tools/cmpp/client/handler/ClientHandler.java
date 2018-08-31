@@ -30,7 +30,6 @@ public class ClientHandler extends IoHandlerAdapter {
 	private final static Logger logger = LoggerFactory.getLogger(ClientHandler.class);
 	
     public void messageReceived(IoSession session, Object message) throws Exception {
-    	System.out.println("messageReceived==>>"+Arrays.toString((byte[])message));
         BaseMessage baseMessage = (BaseMessage) message;
         logger.info("client receive a message is : " + ToStringBuilder.reflectionToString(baseMessage));
     }

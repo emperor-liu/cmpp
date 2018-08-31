@@ -74,15 +74,6 @@ public class MPMessageDecoder extends CumulativeProtocolDecoder {
         		logger.info("<{} active test,序列号：{}>" ,Utils.getNowData(), sequenceId);
 	            break;
             case MsgCommand.CMPP_CONNECT:
-//            	MsgConnect msgConnect = new MsgConnect();
-//                byte[] sourceAddr = new byte[6];
-//                in.get(sourceAddr);
-//                msgConnect.setSourceAddr(new String(sourceAddr));
-//                byte[] aiByte = new byte[16];
-//                in.get(aiByte);
-//                msgConnect.setAuthenticatorSource(aiByte);
-//                msgConnect.setVersion(in.get());
-//                msgConnect.setTimestamp(in.get());
             	MsgConnect msgConnect = service.readMessage(in);
                 msgConnect.setHead(head);
                 logger.info("<{} 链接短信网关,version:{},序列号：{}>" ,Utils.getNowData(), msgConnect.getVersion(), sequenceId);

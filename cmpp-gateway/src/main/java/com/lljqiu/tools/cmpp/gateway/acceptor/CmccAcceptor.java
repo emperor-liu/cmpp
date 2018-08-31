@@ -47,7 +47,7 @@ public class CmccAcceptor {
 
             acceptor.bind();// 启动监听
 
-            LOGGER.info("server start success, port is " + ReadYamlUtils.getGatewayPort());
+            LOGGER.info("<server start success, port is ={}>" , ReadYamlUtils.getGatewayPort());
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage());

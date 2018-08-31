@@ -11,4 +11,4 @@ application:
 #gatewar config
 gatewar:
   port: 7891
-  clientConfig: [{"spIp":"127.0.0.1","spId":"170417","sharedSecret":"170417","spCode":"106584040417","serviceId":"vpass","version":"48"}]
+  clientConfig: [{"spIp":"127.0.0.1","spId":"100861","sharedSecret":"100861","spCode":"106510086","serviceId":"test","version":"48"}]

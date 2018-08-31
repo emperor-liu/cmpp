@@ -58,6 +58,7 @@ public class ConnectAction extends ActionFactoy {
             checkConnectRequest();
         } catch (GateWayException e) {
             status = e.getErrorCode();
+        	logger.error("checkConnectRequest message {} &&& status= {}",e.getMessage(),status);
         }
         connectResp.setStatus(status);
         String authenticatorSource = message.getBodys().getString("authenticatorSource");
@@ -88,7 +89,7 @@ public class ConnectAction extends ActionFactoy {
         ioBuffer.get(aiByte);
         msgConnect.setAuthenticatorSource(aiByte);
         msgConnect.setVersion(ioBuffer.get());
-        msgConnect.setTimestamp(ioBuffer.get());
+        msgConnect.setTimestamp(ioBuffer.getInt());
         return (T) msgConnect;
         	
 	}
