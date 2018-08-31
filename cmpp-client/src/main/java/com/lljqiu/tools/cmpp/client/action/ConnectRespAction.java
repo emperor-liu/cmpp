@@ -24,6 +24,7 @@ public class ConnectRespAction extends ActionFactoy {
 	@Override
 	protected void exec() throws Exception {
 		System.out.println("接收到 Server 端响应"+message.toString());
+		throw new RuntimeException("就想走一个异常");
 
 	}
 

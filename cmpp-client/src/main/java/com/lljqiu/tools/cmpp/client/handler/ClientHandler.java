@@ -32,6 +32,7 @@ public class ClientHandler extends IoHandlerAdapter {
     public void messageReceived(IoSession session, Object message) throws Exception {
         BaseMessage baseMessage = (BaseMessage) message;
         logger.info("client receive a message is : " + ToStringBuilder.reflectionToString(baseMessage));
+        ActionHandler.process(session, baseMessage);
     }
 
     public void messageSent(IoSession session, Object message) throws Exception {
