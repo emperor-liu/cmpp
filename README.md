@@ -1,5 +1,4 @@
 ## CMPP3.0 模拟短信网关
-    采用 byte 作为消息体传输
     
 ## 配置
 ### cmpp-gateway
