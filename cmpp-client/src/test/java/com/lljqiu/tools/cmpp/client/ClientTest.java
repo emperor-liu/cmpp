@@ -43,8 +43,11 @@ public class ClientTest {
         byte[] authenticatorSource = MsgUtils.getAuthenticatorSource(Constants.ServerConfig.gatewayConfig.getSpId(), Constants.ServerConfig.gatewayConfig.getSharedSecret(), connect.getTimestamp()+"");
 		connect.setAuthenticatorSource(authenticatorSource);//md5(企业代码+密匙+时间戳)
 		connect.setVersion((byte) 0x30);//版本号 高4bit为3，低4位为0
-        System.out.println(Arrays.toString(connect.toByteArry()));
-        SocketClient.getInstance().sendMessage(connect.toByteArry());
+//        SocketClient.getInstance().sendMessage(connect.toByteArry());
+        
+        byte[] shortMessage = MsgUtils.toShortMessage("测试信息", "15231046587");
+        System.out.println(Arrays.toString(shortMessage));
+        SocketClient.getInstance().sendMessage(shortMessage);
 //		int parseInt = Integer.parseInt(MsgUtils.getTimestamp());
 //		System.out.println(parseInt);
 //		ByteArrayOutputStream bous = new ByteArrayOutputStream();

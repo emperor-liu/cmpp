@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 
  */
 public class MsgHead {
-    private Logger logger = Logger.getLogger(MsgHead.class);
+    protected Logger logger = Logger.getLogger(MsgHead.class);
     private int    totalLength;                             //Unsigned Integer 消息总长度
     private int    commandId;                               //Unsigned Integer 命令类型
     private int    sequenceId;                              //Unsigned Integer 消息流水号,顺序累加,步长为1,循环使用（一对请求和应答消息的流水号必须相同）

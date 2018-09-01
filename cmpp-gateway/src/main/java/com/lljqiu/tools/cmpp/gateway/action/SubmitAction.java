@@ -11,7 +11,10 @@ package com.lljqiu.tools.cmpp.gateway.action;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.lljqiu.tools.cmpp.gateway.stack.MsgCommand;
 import com.lljqiu.tools.cmpp.gateway.stack.MsgSubmit;
+import com.lljqiu.tools.cmpp.gateway.stack.MsgSubmitResp;
+import com.lljqiu.tools.cmpp.gateway.utils.Constants;
 
 /** 
  * ClassName: ConnectAction.java <br>
@@ -29,7 +32,13 @@ public class SubmitAction extends ActionFactoy {
 	@Override
 	protected void exec() throws Exception {
 		logger.info("<接收 submit 消息>");
-		logger.info("submit={}",message);
+		MsgSubmitResp resp = new MsgSubmitResp();
+		resp.setCommandId(MsgCommand.CMPP_SUBMIT_RESP);
+		resp.setSequenceId(message.getSequenceId());
+		resp.setTotalLength(Constants.MessageTotalLength.SUBMIT_REST);
+		resp.setMsgId(message.getBodys().getLongValue("msgId"));
+		resp.setResult(Constants.RESP_SUCCESS);
+		session.write(resp.toByteArry());
 	}
 
 	/* (non-Javadoc)
@@ -49,6 +58,7 @@ public class SubmitAction extends ActionFactoy {
 		byte[] serviceId = new byte[10];
 		ioBuffer.get(serviceId);
 		submit.setServiceId(new String(serviceId)); //10
+		submit.setFeeUserType(ioBuffer.get());
 		byte[] feeTerminalId = new byte[32];
 		ioBuffer.get(feeTerminalId);
 		submit.setFeeTerminalId(new String(feeTerminalId)); //32
@@ -86,7 +96,7 @@ public class SubmitAction extends ActionFactoy {
 		
 		byte[] Msg_Content = new byte[messageLength];
 		ioBuffer.get(Msg_Content);
-		submit.setMsgContent(new String(Msg_Content));
+		submit.setMsgContent(new String(Msg_Content,"GBK"));
 		byte[] LinkID = new byte[20];
 		ioBuffer.get(LinkID);
 		submit.setLinkID(new String(LinkID));

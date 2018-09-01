@@ -21,6 +21,7 @@ import com.lljqiu.tools.cmpp.client.handler.MessageFactory;
 import com.lljqiu.tools.cmpp.client.stack.BaseMessage;
 import com.lljqiu.tools.cmpp.client.stack.MsgConnectResp;
 import com.lljqiu.tools.cmpp.client.stack.MsgHead;
+import com.lljqiu.tools.cmpp.client.stack.MsgSubmitResp;
 import com.lljqiu.tools.cmpp.client.utils.MsgCommand;
 import com.lljqiu.tools.cmpp.client.utils.Utils;
 
@@ -75,7 +76,9 @@ public class MPMessageDecoder extends CumulativeProtocolDecoder {
         		break;
         	case MsgCommand.CMPP_SUBMIT_RESP:
         		logger.info("<发送下行消息响应>");
-        		service.readMessage(in);
+        		MsgSubmitResp submitResp = service.readMessage(in);
+        		submitResp.setHead(head);
+        		message.setBodys((JSONObject)JSONObject.toJSON(submitResp));
         		break;
         }
         

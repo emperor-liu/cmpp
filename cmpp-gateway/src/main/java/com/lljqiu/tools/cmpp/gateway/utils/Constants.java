@@ -17,6 +17,7 @@ package com.lljqiu.tools.cmpp.gateway.utils;
 public class Constants {
 	
 	public final static byte CMPP_VERSION = 0x30;
+	public final static byte RESP_SUCCESS = 0x0000;
 
 	/**
 	 * action 常量
@@ -48,5 +49,6 @@ public class Constants {
 	public static class MessageTotalLength{
 		public final static Integer CONNECT = 12 + 4 + 16 + 1;
 		public final static Integer ACTIVE_TEST = 12 + 1;
+		public final static Integer SUBMIT_REST = 12 + 8 + 4;
 	}
 }

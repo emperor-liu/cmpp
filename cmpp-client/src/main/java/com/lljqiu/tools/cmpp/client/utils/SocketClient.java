@@ -11,6 +11,7 @@ package com.lljqiu.tools.cmpp.client.utils;
 import java.net.InetSocketAddress;
 
 import org.apache.mina.core.future.ConnectFuture;
+import org.apache.mina.core.future.WriteFuture;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.logging.LoggingFilter;
@@ -82,7 +83,11 @@ public class SocketClient {
 			if (serverSession == null) {
 			    connPushServer();
 			}
-			serverSession.write(data);
+			WriteFuture write = serverSession.write(data);
+			boolean done = write.isDone();
+			if(done){
+				System.out.println("wancheng");
+			}
 //			closeSession();
 		} catch (Exception e) {
 			log.error("sendMessage error {}", e.getMessage());

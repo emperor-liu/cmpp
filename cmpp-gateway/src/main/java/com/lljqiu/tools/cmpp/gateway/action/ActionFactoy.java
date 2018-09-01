@@ -79,7 +79,7 @@ public abstract class ActionFactoy implements ActionService {
             this.message = message;
             exec();
         } catch (Exception e) {
-        	throw new GateWayException("doProcess msg connect error "+ e.getMessage());
+        	throw new GateWayException("doProcess msg connect error "+ e);
         } 
     }
     public <T> T readMessage(IoBuffer ioBuffer) throws Exception{
@@ -87,7 +87,7 @@ public abstract class ActionFactoy implements ActionService {
     		this.ioBuffer = ioBuffer;
     		return readMessage();
     	} catch (Exception e) {
-    		throw new GateWayException("read msg connect error "+ e.getMessage());
+    		throw new GateWayException("read msg connect error "+ e);
     	}
     }
 }

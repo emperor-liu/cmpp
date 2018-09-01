@@ -8,6 +8,9 @@
  */
 package com.lljqiu.tools.cmpp.client.action;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.lljqiu.tools.cmpp.client.stack.MsgConnectResp;
 
 /** 
@@ -17,15 +20,17 @@ import com.lljqiu.tools.cmpp.client.stack.MsgConnectResp;
  * Create Time: 2018年8月31日<br>
  */
 public class ConnectRespAction extends ActionFactoy {
-
+	private final static Logger logger = LoggerFactory.getLogger(ConnectRespAction.class);
 	/* (non-Javadoc)
 	 * @see com.lljqiu.tools.cmpp.client.action.ActionFactoy#exec()
 	 */
 	@Override
 	protected void exec() throws Exception {
-		System.out.println("接收到 Server 端响应"+message.toString());
-		throw new RuntimeException("就想走一个异常");
-
+		logger.info("接收到 Server 端响应{}",message.toString());
+		String status = message.getBodys().getString("status");
+		if(!"0".equals(status)){
+			throw new RuntimeException(message.getBodys().getString("statusStr"));
+		}
 	}
 
 	/* (non-Javadoc)
